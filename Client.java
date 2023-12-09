@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.image.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -13,7 +14,7 @@ import java.net.*;
 
 public class Client extends Application {
     private static final String SERVER_ADDRESS = "127.0.0.1";
-    private static final int SERVER_PORT = 8080;
+    private static final int SERVER_PORT = 9999;
     private TextArea messagesArea;
     private TextField inputField;
     private TextField nameField;
@@ -41,6 +42,15 @@ public class Client extends Application {
             String name = nameField.getText().trim();
             if (!name.isEmpty()) {
                 nameStage.close();
+            }
+        });
+
+        nameField.setOnKeyPressed(e -> {
+            String name = nameField.getText().trim();
+            if(e.getCode() == KeyCode.ENTER) {
+                if(!name.isEmpty()) {
+                    nameStage.close();
+                }
             }
         });
 
@@ -99,6 +109,14 @@ public class Client extends Application {
 
         sendButton.setOnAction(e -> sendMessage());
 
+        inputField.setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                // Execute your function here
+                sendMessage();
+            }
+        });
+
+
         Scene scene = new Scene(pane, 400, 300);
 
         pane.setBackground(new Background(new BackgroundFill(Color.web("#888888"), null, null)));
@@ -135,7 +153,7 @@ public class Client extends Application {
                         Platform.runLater(() -> messagesArea.appendText(finalMessage + "\n"));
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    System.out.println("You are disconnected...");
                 }
             }).start();
         } catch (IOException e) {
@@ -144,8 +162,19 @@ public class Client extends Application {
     }
 
     private void sendMessage() {
+        //TextFlow textFlow = new TextFlow();
         String name = nameField.getText().trim();
         String message = inputField.getText().trim();
+
+        // Text rightText = new Text("You: "+ message + "\n");
+        // rightText.setStyle("-fx-text-fill: blue; -fx-font-weight: bold;");
+
+        Platform.runLater(() -> {
+            // textFlow.getChildren().add(rightText);
+            // messagesArea.getChildren().add(textFlow);
+            messagesArea.appendText(message + "\n");
+        });
+
         if (!message.isEmpty()) {
             String messageToSend = (name.isEmpty() ? "Anonymous" : name) + ": " + message;
             writer.println(messageToSend);

@@ -3,7 +3,7 @@ import java.net.*;
 import java.util.*;
 
 public class Server {
-    private static final int PORT = 8080;
+    private static final int PORT = 9999;
     private static List<Socket> clientSockets = new ArrayList<>();
 
     public static void main(String[] args) {
@@ -57,7 +57,7 @@ public class Server {
                     // Add tab spaces and indicate the sender
                     if (socket == clientSocket) {
                         //sender
-                        writer.println(message);
+                        //writer.println(message);
                     } else {
                         //receiver
                         writer.println(message);
