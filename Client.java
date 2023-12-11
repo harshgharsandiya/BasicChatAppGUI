@@ -125,6 +125,8 @@ public class Client extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
+        inputField.requestFocus();
+
         connectToServer();
     }
 
