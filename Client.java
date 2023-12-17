@@ -111,7 +111,6 @@ public class Client extends Application {
 
         inputField.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.ENTER) {
-                // Execute your function here
                 sendMessage();
             }
         });
@@ -136,7 +135,6 @@ public class Client extends Application {
         if (writer != null) {
             writer.close();
         }
-        // Handle closing other resources such as the socket if needed
     }
 
 
@@ -168,13 +166,8 @@ public class Client extends Application {
         String name = nameField.getText().trim();
         String message = inputField.getText().trim();
 
-        // Text rightText = new Text("You: "+ message + "\n");
-        // rightText.setStyle("-fx-text-fill: blue; -fx-font-weight: bold;");
-
         Platform.runLater(() -> {
-            // textFlow.getChildren().add(rightText);
-            // messagesArea.getChildren().add(textFlow);
-            messagesArea.appendText(message + "\n");
+            messagesArea.appendText("You: "+ message + "\n");
         });
 
         if (!message.isEmpty()) {
